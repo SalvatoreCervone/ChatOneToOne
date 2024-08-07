@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+// namespace App\Http\Controllers;
+
+namespace JohnDoe\BlogPackage\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;

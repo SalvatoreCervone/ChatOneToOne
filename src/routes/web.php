@@ -1,14 +1,10 @@
 <?php
 
 use App\Models\User;
-use Inertia\Inertia;
 use App\Events\MessageSent;
-use App\Models\ChatMessage;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatMessageController;
-
+use App\Models\ChatMessage;
 
 // Route::prefix('http://10.119.179.171')->group(function () {
 // require __DIR__ . '/auth.php';
