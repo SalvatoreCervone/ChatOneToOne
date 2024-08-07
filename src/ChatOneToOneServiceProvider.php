@@ -18,16 +18,16 @@ class ChatOneToOneServiceProvider extends ServiceProvider
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
-        $this->publishesMigrations([
-            __DIR__ . '/../database/migrations' => database_path('migrations'),
-        ]);
+        // $this->publishesMigrations([
+        //     __DIR__ . '/../database/migrations' => database_path('migrations'),
+        // ]);
+        $this->loadViewsFrom(__DIR__ . '/resources/js/Pages', 'chatonetoone');
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
 
-        $this->loadViewsFrom(__DIR__ . '/resources/js/Pages', 'chatonetoone');
     }
 
     /**
