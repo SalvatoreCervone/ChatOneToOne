@@ -1,40 +1,46 @@
 {
-    "name": "salvatorecervone/chatonetoone",
-    "description": "Real time Chat one to one",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Salvatore Cervone",
-            "email": "salvatore999@virgilio.it"        
-        }
-    ],
-    "homepage": "https://github.com/salvatorecervone/chatonetoone",
-    "keywords": ["Laravel", "ChatOneToOne"],
-    "require": {
-        "illuminate/support": "~9"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "~9.0",
-        "orchestra/testbench": "~7"
-    },
-    "autoload": {
-        "psr-4": {
-            "SalvatoreCervone\\ChatOneToOne\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "SalvatoreCervone\\ChatOneToOne\\Tests\\": "tests"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "SalvatoreCervone\\ChatOneToOne\\ChatOneToOneServiceProvider"
-            ],
-            "aliases": {
-                "ChatOneToOne": "SalvatoreCervone\\ChatOneToOne\\Facades\\ChatOneToOne"
-            }
-        }
+  "name": "salvatorecervone/chatonetoone",
+  "description": "Real time Chat one to one",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Salvatore Cervone",
+      "email": "salvatore999@virgilio.it"
     }
+  ],
+  "homepage": "https://github.com/salvatorecervone/chatonetoone",
+  "keywords": [
+    "Laravel",
+    "ChatOneToOne"
+  ],
+  "require": {
+    "php": "^8.2",
+    "illuminate/support": "~9"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~9.0",
+    "orchestra/testbench": "~7"
+  },
+  "autoload": {
+    "psr-4": {
+      "SalvatoreCervone\\ChatOneToOne\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SalvatoreCervone\\ChatOneToOne\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SalvatoreCervone\\ChatOneToOne\\ChatOneToOneServiceProvider"
+      ],
+      "aliases": {
+        "ChatOneToOne": "SalvatoreCervone\\ChatOneToOne\\Facades\\ChatOneToOne"
+      }
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
