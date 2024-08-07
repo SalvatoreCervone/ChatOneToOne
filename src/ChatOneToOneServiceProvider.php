@@ -23,11 +23,15 @@ class ChatOneToOneServiceProvider extends ServiceProvider
         // ]);
         $this->loadViewsFrom(__DIR__ . '/resources/js/Pages', 'chatonetoone');
 
+
+        $this->publishes([
+            __DIR__ . '/resources/js/Pages' => resource_path('js/Pages/chatonetoone/')
+        ], 'vue-components');
+
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
-
     }
 
     /**

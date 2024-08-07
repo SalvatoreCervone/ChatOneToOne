@@ -14,7 +14,7 @@ Route::get('/users', function () {
     return User::where('id', "!=", auth()->user()->id)->get();
 })->name('users');
 
-Route::get('/', [ChatMessageController::class, 'index'])->name('dashboard');
+Route::get('/chats', [ChatMessageController::class, 'index'])->name('chats');
 
 Route::get('/chat/{friend}', function (User $friend) {
     return view('chat', [

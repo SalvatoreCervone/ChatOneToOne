@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 
 class ChatMessageController extends Controller
 {
-    function index(User $friend = null)
+    function index()
     {
-        return  Inertia::render('Dashboard', [
+        return  Inertia::render('ChatComponent2', [
             'authuser' => auth()->user(),
             // 'users' => User::whereNot('id', auth()->id())->get(),
             // 'friend' => $friend
