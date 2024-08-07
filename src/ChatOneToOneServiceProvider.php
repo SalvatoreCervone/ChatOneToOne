@@ -17,7 +17,7 @@ class ChatOneToOneServiceProvider extends ServiceProvider
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'salvatorecervone');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
         $this->publishesMigrations([
             __DIR__ . '/../database/migrations' => database_path('migrations'),
         ]);
@@ -27,7 +27,7 @@ class ChatOneToOneServiceProvider extends ServiceProvider
             $this->bootForConsole();
         }
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/js/Pages', 'chatonetoone');
+        $this->loadViewsFrom(__DIR__ . '/resources/js/Pages', 'chatonetoone');
     }
 
     /**
