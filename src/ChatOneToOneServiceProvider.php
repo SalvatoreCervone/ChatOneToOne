@@ -15,6 +15,7 @@ class ChatOneToOneServiceProvider extends ServiceProvider
     {
 
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/routes/channels.php');
         $this->publishes([__DIR__ . '/database/migrations' => database_path('/migrations')], 'migration-chatonetoone');
         // $this->publishes([__DIR__ . '/resources/js' => resource_path('js/')], 'js-chatonetoone');
         $this->publishes([__DIR__ . '/resources/js/Pages' => resource_path('js/Pages/chatonetoone/')], 'vue-chatonetoone');

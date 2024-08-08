@@ -10,6 +10,10 @@ Laravel Reverb
 
 https://laravel.com/docs/11.x/reverb#main-content
 
+Prime vue
+
+https://primevue.org/vite/
+
 ## Installation
 
 Via Composer
@@ -55,7 +59,7 @@ php artisan vendor:publish --tag=migration-chatonetoone
 Call migrations
 
 ```bash
-php artisan migration
+php artisan migrate
 ```
 ## Usage
 
