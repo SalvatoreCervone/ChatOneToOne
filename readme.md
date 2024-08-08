@@ -4,7 +4,11 @@
 
 Laravel version >= 11
 
+https://laravel.com/docs/11.x/installation
+
 Laravel Reverb
+
+https://laravel.com/docs/11.x/reverb#main-content
 
 Laravel Echo and Pusher
 
