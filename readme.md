@@ -67,6 +67,12 @@ php artisan migration
 ```
 ## Usage
 
+Start server websocket
+
+```bash
+php artisan reverb:start
+```
+
 Now you have Controllers, Models, Migrations and Vue components for Chat one to one
 
 The components is locate in resources/js/Pages/
