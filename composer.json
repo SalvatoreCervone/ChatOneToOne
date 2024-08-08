@@ -14,7 +14,9 @@
     "ChatOneToOne"
   ],
   "require": {
-    "php": "^8.2"
+    "php": "^8.2",
+    "laravel/framework": "^11.0",
+    "laravel/reverb": "@beta"
   },
   "require-dev": {
     "phpunit/phpunit": "~9.0",

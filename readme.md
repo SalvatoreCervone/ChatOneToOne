@@ -7,6 +7,18 @@
 
 This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
 
+## Required
+
+Laravel version >= 11
+
+Laravel Reverb
+
+Laravel Echo and Pusher
+
+```bash
+npm install --save-dev laravel-echo pusher-js
+```
+
 ## Installation
 
 Via Composer
@@ -17,41 +29,39 @@ composer require salvatorecervone/chatonetoone
 
 ## Usage
 
-## Change log
-
-Please see the [changelog](changelog.md) for more information on what has changed recently.
-
-## Testing
+Publish controller
 
 ```bash
-composer test
+php artisan vendor:publish --tag=controller-chatonetoone
 ```
 
-## Contributing
+Publish Js file and component
 
-Please see [contributing.md](contributing.md) for details and a todolist.
+```bash
+php artisan vendor:publish --tag=js-chatonetoone
+```
+
+Publish model
+
+```bash
+php artisan vendor:publish --tag=model-chatonetoone
+```
+
+After this add this line of code in your bootstrap.js file
+
+```bash
+import './chatonetoone-echo'
+```
 
 ## Security
 
-If you discover any security related issues, please email author@email.com instead of using the issue tracker.
+If you discover any security related issues, please email salvatore999@virgilio.it instead of using the issue tracker.
 
 ## Credits
 
-- [Author Name][link-author]
-- [All Contributors][link-contributors]
+- [Salvatore Cervone]
 
 ## License
 
 MIT. Please see the [license file](license.md) for more information.
-
-[ico-version]: https://img.shields.io/packagist/v/salvatorecervone/chatonetoone.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/salvatorecervone/chatonetoone.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/salvatorecervone/chatonetoone/master.svg?style=flat-square
-[ico-styleci]: https://styleci.io/repos/12345678/shield
-
 [link-packagist]: https://packagist.org/packages/salvatorecervone/chatonetoone
-[link-downloads]: https://packagist.org/packages/salvatorecervone/chatonetoone
-[link-travis]: https://travis-ci.org/salvatorecervone/chatonetoone
-[link-styleci]: https://styleci.io/repos/12345678
-[link-author]: https://github.com/salvatorecervone
-[link-contributors]: ../../contributors
