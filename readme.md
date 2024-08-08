@@ -14,6 +14,10 @@ Prime vue
 
 https://primevue.org/vite/
 
+Prime vue icons
+
+https://primevue.org/icons/
+
 ## Installation
 
 Via Composer
@@ -74,6 +78,12 @@ Now you have Controllers, Models, Migrations and Vue components for Chat one to 
 The components is locate in resources/js/Pages/
 
 The component ChatComponent2 is the start component for Chat
+
+Go to route 
+
+/chats 
+
+and view chat run
 
 ## Security
 
