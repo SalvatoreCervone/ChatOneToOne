@@ -40,6 +40,12 @@ Publish model
 php artisan vendor:publish --tag=model-chatonetoone
 ```
 
+Publish event
+
+```bash
+php artisan vendor:publish --tag=event-chatonetoone
+```
+
 After this add this line of code in your bootstrap.js file
 
 ```bash

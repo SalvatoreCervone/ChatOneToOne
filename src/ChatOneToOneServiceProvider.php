@@ -15,10 +15,12 @@ class ChatOneToOneServiceProvider extends ServiceProvider
     {
 
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
+        $this->publishes([__DIR__ . '/database/migrations' => database_path('/migrations')], 'migration-chatonetoone');
         $this->publishes([__DIR__ . '/resources/js' => resource_path('js/')], 'js-chatonetoone');
         $this->publishes([__DIR__ . '/resources/js/Pages' => resource_path('js/Pages/chatonetoone/')], 'vue-chatonetoone');
         $this->publishes([__DIR__ . '/Http/Controllers' => app_path('Http/Controllers/')], 'controller-chatonetoone');
         $this->publishes([__DIR__ . '/Models' => app_path('Models/')], 'model-chatonetoone');
+        $this->publishes([__DIR__ . '/Events' => app_path('Events/')], 'event-chatonetoone');
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
@@ -62,7 +64,5 @@ class ChatOneToOneServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/chatonetoone.php' => config_path('chatonetoone.php'),
         ], 'chatonetoone.config');
-
-     
     }
 }
