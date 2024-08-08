@@ -10,12 +10,6 @@ Laravel Reverb
 
 https://laravel.com/docs/11.x/reverb#main-content
 
-Laravel Echo and Pusher
-
-```bash
-npm install --save-dev laravel-echo pusher-js
-```
-
 ## Installation
 
 Via Composer
@@ -32,10 +26,10 @@ Publish controller
 php artisan vendor:publish --tag=controller-chatonetoone
 ```
 
-Publish Js file and component
+Publish vue component
 
 ```bash
-php artisan vendor:publish --tag=js-chatonetoone
+php artisan vendor:publish --tag=vue-chatonetoone
 ```
 
 Publish model
@@ -50,12 +44,10 @@ Publish event
 php artisan vendor:publish --tag=event-chatonetoone
 ```
 
-## Insert Echo
-
-After this add this line of code in your bootstrap.js file
+Publish migration
 
 ```bash
-import './chatonetoone-echo'
+php artisan vendor:publish --tag=migration-chatonetoone
 ```
 
 ## Migrations
