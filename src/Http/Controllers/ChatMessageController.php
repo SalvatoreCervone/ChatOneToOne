@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 
 
+
+
 class ChatMessageController extends Controller
 {
     function index()
