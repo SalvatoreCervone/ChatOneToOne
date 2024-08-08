@@ -24,7 +24,7 @@ Via Composer
 composer require salvatorecervone/chatonetoone
 ```
 
-## Usage
+## Publishs
 
 Publish controller
 
@@ -50,19 +50,28 @@ Publish event
 php artisan vendor:publish --tag=event-chatonetoone
 ```
 
+## Insert Echo
+
 After this add this line of code in your bootstrap.js file
 
 ```bash
 import './chatonetoone-echo'
 ```
 
-## Migration
+## Migrations
 
 Call migrations
 
 ```bash
 php artisan migration
 ```
+## Usage
+
+Now you have Controllers, Models, Migrations and Vue components for Chat one to one
+
+The components is locate in resources/js/Pages/
+
+The component ChatComponent2 is the start component for Chat
 
 ## Security
 
