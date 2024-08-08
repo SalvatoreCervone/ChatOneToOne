@@ -52,6 +52,14 @@ After this add this line of code in your bootstrap.js file
 import './chatonetoone-echo'
 ```
 
+## Migration
+
+Call migrations
+
+```bash
+php artisan migration
+```
+
 ## Security
 
 If you discover any security related issues, please email salvatore999@virgilio.it instead of using the issue tracker.
