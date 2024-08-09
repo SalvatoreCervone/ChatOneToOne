@@ -64,6 +64,12 @@ function iconizzachat() {
 
 </script>
 <style scoped>
+#chatbox {
+    height: 500px;
+    width: 400px;
+    border: 1px solid rgb(221, 221, 221);
+
+}
 #chatmenu {
     height: 50px;
     border: 1px solid rgb(221, 221, 221);
@@ -73,11 +79,7 @@ function iconizzachat() {
     align-self: center;
 }
 
-#chatbox {
-    height: 500px;
-    width: 400px;
 
-}
 
 .altezza0 {
     height: 50px !important;
