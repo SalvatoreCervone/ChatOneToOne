@@ -66,6 +66,7 @@ function iconizzachat() {
 <style scoped>
 #chatmenu {
     height: 50px;
+    border: 1px solid rgb(221, 221, 221);
 }
 
 #chatmenu i {
@@ -79,6 +80,6 @@ function iconizzachat() {
 }
 
 .altezza0 {
-    height: 0px !important;
+    height: 50px !important;
 }
 </style>
