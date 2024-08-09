@@ -9,7 +9,7 @@
             <div class="float-right">
                 <i class="pi pi-times mr-5" @click="chiudichat()"></i>
             </div>
-            <div class="flex">
+            <div class="flex gap-2">
                 <span>{{ props.friend.name }}</span>
                 <span>{{ props.friend.email }}</span>
             </div>
