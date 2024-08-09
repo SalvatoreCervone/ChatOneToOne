@@ -79,11 +79,23 @@ The components is locate in resources/js/Pages/
 
 The component ChatComponent2 is the start component for Chat
 
-Go to route 
-
-/chats 
+Go to route {APP_URL}/chats 
 
 and view chat run
+
+## Remember
+
+In production change ip in file .env 
+```bash
+KEY -> REVERB_HOST
+```
+with the ip where application websocket installed
+
+if the server is one, for application and chat, you would write 
+
+```bash
+REVERB_HOST="${APP_URL}"
+```
 
 ## Security
 
