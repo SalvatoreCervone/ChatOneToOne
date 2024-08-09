@@ -11,11 +11,11 @@
         </div>
         <hr />
         <div v-if="!iconizza">
-            <Friendslist class="max-h-fit" v-if="props.currentUser" v-show="friendslist"
+            <Friendslist  v-if="props.currentUser" v-show="friendslist"
                 :currentUser="props.currentUser" @user="userselected">
             </Friendslist>
 
-            <ChatMessage v-if="friend" v-show="chatmessages" style="height: 50lvh;" class="max-h-fit"
+            <ChatMessage v-if="friend" v-show="chatmessages"
                 @chiudichat="chiudichat" :friend="friend" :currentUser="currentUser" id="chatview"></ChatMessage>
         </div>
 
@@ -68,6 +68,6 @@ function iconizzachat() {
 }
 
 .altezza0 {
-    height: 0px;
+    height: 0px!important;
 }
 </style>
