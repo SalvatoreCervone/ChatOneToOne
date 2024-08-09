@@ -2,7 +2,7 @@
     <div id="listmessage">
         <div id="profile" class="m-2">
             <div>
-                <div class="float-right" style="width: 10px;">
+                <div class="float-right mr-2" style="width: 10px;">
                     <template v-if="props.friend.status">
                         <i class="pi pi-circle-fill text-green-500"></i>
                     </template>
@@ -22,7 +22,7 @@
         <div id="chat-messages" ref="messagesContainer">
             <template v-if="messages">
                 <template v-for="message in messages" :key="message.id">
-                    <div v-if="message.sender_id === currentUser.id" class="message right">
+                    <div v-if="message.sender_id == currentUser.id" class="message right">
                         <div class="bubble bg-blue-500 text-white">
                             {{ message.text }}
                         </div>
