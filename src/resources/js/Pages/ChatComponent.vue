@@ -1,6 +1,6 @@
 <template>
     <div id="chatbox" :class="{ 'altezza0': iconizza }">
-        <div id="chatmenu" class="grid grid-cols-4 grid-rows-1 text-center m-2">
+        <div id="chatmenu" class="grid grid-cols-4 grid-rows-1 text-center">
 
             <i class="pi pi-users"></i>
             <i class="pi pi-inbox"></i>
