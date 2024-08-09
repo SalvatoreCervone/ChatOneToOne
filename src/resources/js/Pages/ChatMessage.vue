@@ -1,19 +1,19 @@
 <template>
-    <div id="profile">
-        <div class="text-right">
-            <i class="pi pi-times mr-5" @click="chiudichat()"></i>
-        </div>
-        <p>{{ props.friend.name }}</p>
-        <span>{{ props.friend.email }}</span>
-        <div>
-
-            <span v-if="props.friend.status"><i class="pi pi-circle-fill text-green-500"></i></span>
+    <div id="profile" class="m-2">
+        <div class="flex">
+            <div class="float-left">
+                <template v-if="props.friend.status"><i class="pi pi-circle-fill text-green-500"></i></template>
+            </div>
+            <span>{{ props.friend.name }}</span>
+            <span>{{ props.friend.email }}</span>
+            <div class="float-right">
+                <i class="pi pi-times mr-5" @click="chiudichat()"></i>
+            </div>            
         </div>
         <Stascrivendo :current_user_id="props.currentUser.id" :friend="friend"></Stascrivendo>
-        <!-- <span>{{ props.friend.status }}</span> -->
     </div>
     <hr />
-    <div id="chat-messages" ref="messagesContainer" >
+    <div id="chat-messages" ref="messagesContainer">
         <template v-if="messages">
             <template v-for="message in messages" :key="message.id">
                 <div v-if="message.sender_id === currentUser.id" class="message right">
@@ -30,7 +30,7 @@
         </template>
     </div>
     <hr />
-    <div id="sendmessage1" style="height: 10%">
+    <div id="sendmessage1" style="height: 50px">
         <InputText :modelValue="newMessage" @update:modelValue="newMessage = $event" @keydown="sendTypingEvent"
             @keyup.enter="sendMessage" placeholder="Scrivi un messaggio..." class="flex-1 px-2 py-1 border rounded-lg">
         </InputText>
@@ -79,10 +79,6 @@ watch(
     { deep: true }
 );
 
-
-
-
-
 const sendTypingEvent = () => {
     Echo.private(`chat.${props.friend.id}`).whisper("typing", {
         userID: props.currentUser.id,
@@ -114,9 +110,13 @@ function getmessages(user_id) {
     });
 }
 </script>
-<style >
+<style>
 body {
     overflow: hidden;
+}
+
+#profile {
+    height: 50px;
 }
 
 #profile p.animate {
@@ -133,7 +133,7 @@ body {
     /* opacity: 0; */
     /* margin-top: 2%; */
     /* width: 290px; */
-    height: 300px;
+    height: 320px;
     overflow-y: scroll;
     overflow-x: hidden;
     padding-right: 10px;
