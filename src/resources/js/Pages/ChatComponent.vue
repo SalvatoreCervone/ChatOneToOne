@@ -72,7 +72,7 @@ function iconizzachat() {
 }
 #chatmenu {
     height: 50px;
-    border: 1px solid rgb(221, 221, 221);
+    
 }
 
 #chatmenu i {
