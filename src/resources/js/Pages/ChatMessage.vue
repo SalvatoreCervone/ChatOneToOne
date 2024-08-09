@@ -1,47 +1,50 @@
 <template>
-    <div id="profile" class="m-2">
-        <div>
-            <div class="float-right" style="width: 10px;">
-                <template v-if="props.friend.status">
-                    <i class="pi pi-circle-fill text-green-500"></i>
-                </template>
-            </div>
-            <div class="float-right">
-                <i class="pi pi-times mr-5" @click="chiudichat()"></i>
-            </div>
-            <div class="flex gap-2">
-                <span>{{ props.friend.name }}</span>
-                <span>{{ props.friend.email }}</span>
-            </div>
+    <div id="listmessage">
+        <div id="profile" class="m-2">
+            <div>
+                <div class="float-right" style="width: 10px;">
+                    <template v-if="props.friend.status">
+                        <i class="pi pi-circle-fill text-green-500"></i>
+                    </template>
+                </div>
+                <div class="float-right">
+                    <i class="pi pi-times mr-5" @click="chiudichat()"></i>
+                </div>
+                <div class="flex gap-2">
+                    <span>{{ props.friend.name }}</span>
+                    <span>{{ props.friend.email }}</span>
+                </div>
 
+            </div>
+            <Stascrivendo :current_user_id="props.currentUser.id" :friend="friend"></Stascrivendo>
         </div>
-        <Stascrivendo :current_user_id="props.currentUser.id" :friend="friend"></Stascrivendo>
-    </div>
-    <hr />
-    <div id="chat-messages" ref="messagesContainer">
-        <template v-if="messages">
-            <template v-for="message in messages" :key="message.id">
-                <div v-if="message.sender_id === currentUser.id" class="message right">
-                    <div class="bubble bg-blue-500 text-white">
-                        {{ message.text }}
+        <hr />
+        <div id="chat-messages" ref="messagesContainer">
+            <template v-if="messages">
+                <template v-for="message in messages" :key="message.id">
+                    <div v-if="message.sender_id === currentUser.id" class="message right">
+                        <div class="bubble bg-blue-500 text-white">
+                            {{ message.text }}
+                        </div>
                     </div>
-                </div>
-                <div v-else class="message left bg-grey-200">
-                    <div class="bubble bg-gray-200">
-                        {{ message.text }}
+                    <div v-else class="message left bg-grey-200">
+                        <div class="bubble bg-gray-200">
+                            {{ message.text }}
+                        </div>
                     </div>
-                </div>
+                </template>
             </template>
-        </template>
-    </div>
-    <hr />
-    <div id="sendmessage1" style="height: 50px">
-        <InputText :modelValue="newMessage" @update:modelValue="newMessage = $event" @keydown="sendTypingEvent"
-            @keyup.enter="sendMessage" placeholder="Scrivi un messaggio..." class="flex-1 px-2 py-1 border rounded-lg">
-        </InputText>
+        </div>
+        <hr />
+        <div id="sendmessage1" style="height: 50px">
+            <InputText :modelValue="newMessage" @update:modelValue="newMessage = $event" @keydown="sendTypingEvent"
+                @keyup.enter="sendMessage" placeholder="Scrivi un messaggio..."
+                class="flex-1 px-2 py-1 border rounded-lg">
+            </InputText>
 
-        <Button icon="pi pi-sign-in" @click="sendMessage" class="px-4 py-1 ml-2 text-white bg-blue-500 rounded-lg">
-        </Button>
+            <Button icon="pi pi-sign-in" @click="sendMessage" class="px-4 py-1 ml-2 text-white bg-blue-500 rounded-lg">
+            </Button>
+        </div>
     </div>
 </template>
 <script setup>
@@ -115,9 +118,9 @@ function getmessages(user_id) {
     });
 }
 </script>
-<style>
-body {
-    overflow: hidden;
+<style scoped>
+#listmessage {
+    height: 450px;
 }
 
 #profile {
@@ -135,10 +138,7 @@ body {
 }
 
 #chat-messages {
-    /* opacity: 0; */
-    /* margin-top: 2%; */
-    /* width: 290px; */
-    height: 320px;
+    height: 350px;
     overflow-y: scroll;
     overflow-x: hidden;
     padding-right: 10px;
@@ -153,16 +153,6 @@ body {
     opacity: 1;
     margin-top: 0;
 }
-
-/* #chat-messages label {
-    color: #aab8c2;
-    font-weight: 600;
-    font-size: 12px;
-    text-align: center;
-    margin: 15px 0;
-    width: 290px;
-    display: block;
-} */
 
 #chat-messages div.message {
     padding: 0 0 3% 5%;

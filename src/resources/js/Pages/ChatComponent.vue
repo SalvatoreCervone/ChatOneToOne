@@ -18,7 +18,7 @@
                 @user="userselected">
             </Friendslist>
 
-            <ChatMessage v-if="friend" v-show="chatmessages" @chiudichat="chiudichat" :friend="friend"
+            <ChatMessage v-if="friend && chatmessages" v-show="chatmessages" @chiudichat="chiudichat" :friend="friend"
                 :currentUser="currentUser" id="chatview"></ChatMessage>
         </div>
 
@@ -70,9 +70,10 @@ function iconizzachat() {
     border: 1px solid rgb(221, 221, 221);
 
 }
+
 #chatmenu {
     height: 50px;
-    
+
 }
 
 #chatmenu i {
