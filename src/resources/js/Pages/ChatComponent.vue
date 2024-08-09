@@ -1,22 +1,25 @@
 <template>
     <div id="chatbox" :class="{ 'altezza0': iconizza }">
-        <div class="grid grid-cols-4 grid-rows-1 text-center m-5">
+        <div id="chatmenu" class="grid grid-cols-4 grid-rows-1 text-center m-2">
 
             <i class="pi pi-users"></i>
             <i class="pi pi-inbox"></i>
+
+
             <DropdownLink :href="route('logout')" method="post" as="button">
                 Log Out
             </DropdownLink>
+
             <i class="pi pi-circle-fill color-yellow-500" @click="iconizzachat"></i>
         </div>
         <hr />
         <div v-if="!iconizza">
-            <Friendslist  v-if="props.currentUser" v-show="friendslist"
-                :currentUser="props.currentUser" @user="userselected">
+            <Friendslist v-if="props.currentUser" v-show="friendslist" :currentUser="props.currentUser"
+                @user="userselected">
             </Friendslist>
 
-            <ChatMessage v-if="friend" v-show="chatmessages"
-                @chiudichat="chiudichat" :friend="friend" :currentUser="currentUser" id="chatview"></ChatMessage>
+            <ChatMessage v-if="friend" v-show="chatmessages" @chiudichat="chiudichat" :friend="friend"
+                :currentUser="currentUser" id="chatview"></ChatMessage>
         </div>
 
     </div>
@@ -61,6 +64,14 @@ function iconizzachat() {
 
 </script>
 <style scoped>
+#chatmenu {
+    height: 50px;
+}
+
+#chatmenu i {
+    align-self: center;
+}
+
 #chatbox {
     height: 500px;
     width: 400px;
@@ -68,6 +79,6 @@ function iconizzachat() {
 }
 
 .altezza0 {
-    height: 0px!important;
+    height: 0px !important;
 }
 </style>
