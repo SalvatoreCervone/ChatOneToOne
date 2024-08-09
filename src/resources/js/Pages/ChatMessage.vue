@@ -1,14 +1,19 @@
 <template>
     <div id="profile" class="m-2">
-        <div class="flex">
-            <div class="float-left">
-                <template v-if="props.friend.status"><i class="pi pi-circle-fill text-green-500"></i></template>
+        <div>
+            <div class="float-right" style="width: 10px;">
+                <template v-if="props.friend.status">
+                    <i class="pi pi-circle-fill text-green-500"></i>
+                </template>
             </div>
-            <span>{{ props.friend.name }}</span>
-            <span>{{ props.friend.email }}</span>
             <div class="float-right">
                 <i class="pi pi-times mr-5" @click="chiudichat()"></i>
-            </div>            
+            </div>
+            <div class="flex">
+                <span>{{ props.friend.name }}</span>
+                <span>{{ props.friend.email }}</span>
+            </div>
+
         </div>
         <Stascrivendo :current_user_id="props.currentUser.id" :friend="friend"></Stascrivendo>
     </div>
