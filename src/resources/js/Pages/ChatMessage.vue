@@ -13,7 +13,7 @@
         <!-- <span>{{ props.friend.status }}</span> -->
     </div>
     <hr />
-    <div id="chat-messages" ref="messagesContainer" style="height: 78vh">
+    <div id="chat-messages" ref="messagesContainer" >
         <template v-if="messages">
             <template v-for="message in messages" :key="message.id">
                 <div v-if="message.sender_id === currentUser.id" class="message right">
@@ -133,7 +133,7 @@ body {
     /* opacity: 0; */
     /* margin-top: 2%; */
     /* width: 290px; */
-    /* height: 270px; */
+    height: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
     padding-right: 10px;

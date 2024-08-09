@@ -129,9 +129,9 @@ function checkoffline(usersonline) {
     })
 }
 </script>
-<style>
+<style scoped>
 #friendslist {
     overflow-y: scroll;
-    height: 78vh
+    height: 450px
 }
 </style>

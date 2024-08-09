@@ -1,105 +1,73 @@
 <template>
-    <div v-if="friend">
-        <div>{{ friend.name }}</div>
-        <div class="flex flex-col justify-end h-80">
-            <div ref="messagesContainer" class="p-4 overflow-y-auto max-h-fit">
-                <div v-for="message in messages" :key="message.id" class="flex items-center mb-2">
-                    <div v-if="message.sender_id === currentUser.id"
-                        class="p-2 ml-auto text-white bg-blue-500 rounded-lg">
-                        {{ message.text }}
-                    </div>
-                    <div v-else class="p-2 mr-auto bg-gray-200 rounded-lg">
-                        {{ message.text }}
-                    </div>
-                </div>
-            </div>
+    <div id="chatbox" :class="{ 'altezza0': iconizza }">
+        <div class="grid grid-cols-4 grid-rows-1 text-center m-5">
+
+            <i class="pi pi-users"></i>
+            <i class="pi pi-inbox"></i>
+            <DropdownLink :href="route('logout')" method="post" as="button">
+                Log Out
+            </DropdownLink>
+            <i class="pi pi-circle-fill color-yellow-500" @click="iconizzachat"></i>
         </div>
-        <div class="flex items-center">
-            <input type="text" v-model="newMessage" @keydown="sendTypingEvent" @keyup.enter="sendMessage"
-                placeholder="Scrivi un messaggio..." class="flex-1 px-2 py-1 border rounded-lg" />
-            <button @click="sendMessage" class="px-4 py-1 ml-2 text-white bg-blue-500 rounded-lg">
-                Invia
-            </button>
+        <hr />
+        <div v-if="!iconizza">
+            <Friendslist class="max-h-fit" v-if="props.currentUser" v-show="friendslist"
+                :currentUser="props.currentUser" @user="userselected">
+            </Friendslist>
+
+            <ChatMessage v-if="friend" v-show="chatmessages" style="height: 50lvh;" class="max-h-fit"
+                @chiudichat="chiudichat" :friend="friend" :currentUser="currentUser" id="chatview"></ChatMessage>
         </div>
-        <small v-if="isFriendTyping" class="text-gray-700">
-            {{ friend.name }} sta scrivendo...
-        </small>
+
     </div>
 </template>
 
 <script setup>
-import axios from "axios";
-import { nextTick, onMounted, ref, watch } from "vue";
+import Friendslist from "./Friendslist.vue";
+import ChatMessage from "./ChatMessage.vue"
+import DropdownLink from '@/Components/DropdownLink.vue';
+import { ref } from "vue";
 
 const props = defineProps({
-    friend: {
-        type: Object,
-        required: true,
-    },
     currentUser: {
         type: Object,
         required: true,
+        default: null
     },
 });
 
-const messages = ref([]);
-const newMessage = ref("");
-const messagesContainer = ref(null);
-const isFriendTyping = ref(false);
-const isFriendTypingTimer = ref(null);
+const friendslist = ref(true);
+const chatmessages = ref(false);
+const friend = ref(null);
+const iconizza = ref(false);
 
-watch(
-    messages,
-    () => {
-        nextTick(() => {
-            messagesContainer.value.scrollTo({
-                top: messagesContainer.value.scrollHeight,
-                behavior: "smooth",
-            });
-        });
-    },
-    { deep: true }
-);
 
-const sendMessage = () => {
-    if (newMessage.value.trim() !== "") {
-        axios
-            .post(`/messages/${props.friend.id}`, {
-                message: newMessage.value,
-            })
-            .then((response) => {
-                messages.value.push(response.data);
-                newMessage.value = "";
-            });
-    }
-};
+function userselected(val) {
+    friend.value = val;
+    friendslist.value = false;
+    chatmessages.value = true;
+    // getmessages(val.id);
+}
 
-const sendTypingEvent = () => {
-    Echo.private(`chat.${props.friend.id}`).whisper("typing", {
-        userID: props.currentUser.id,
-    });
-};
+function chiudichat() {
+    friendslist.value = true;
+    chatmessages.value = false;
 
-onMounted(() => {
-    axios.get(`/messages/${props.friend.id}`).then((response) => {
-        console.log(response.data);
-        messages.value = response.data;
-    });
+}
 
-    Echo.private(`chat.${props.currentUser.id}`)
-        .listen("MessageSent", (response) => {
-            messages.value.push(response.message);
-        })
-        .listenForWhisper("typing", (response) => {
-            isFriendTyping.value = response.userID === props.friend.id;
+function iconizzachat() {
+    iconizza.value = !iconizza.value
+}
 
-            if (isFriendTypingTimer.value) {
-                clearTimeout(isFriendTypingTimer.value);
-            }
-
-            isFriendTypingTimer.value = setTimeout(() => {
-                isFriendTyping.value = false;
-            }, 1000);
-        });
-});
 </script>
+<style scoped>
+#chatbox {
+    height: 500px;
+    width: 400px;
+
+}
+
+.altezza0 {
+    height: 0px;
+}
+</style>
