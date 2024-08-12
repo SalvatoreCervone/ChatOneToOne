@@ -45,10 +45,16 @@ const force = ref(false);
 
 const props = defineProps({
     currentUser: { type: Object, required: true },
+    open: { type: Boolean, default: false }
 });
 
 function nuovomessaggio(user_id) {
-    setnewmessage.value = newmessage.value.includes(user_id) ? user_id : 0;
+    if (open) {
+
+        setnewmessage.value = newmessage.value.includes(user_id) ? user_id : 0;
+    } else {
+        setnewmessage.value = 0;
+    }
 };
 
 
@@ -100,7 +106,7 @@ function aprichat(user) {
     if (index > -1) {
         newmessage.value.splice(index, 1);
     }
-    setnewmessage.value = false
+    setnewmessage.value = 0
     force.value = true
     emit("user", user);
 }

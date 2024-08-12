@@ -43,10 +43,10 @@ function messagestoread(user_id) {
     axios.get('/messages/receiver/toread/' + user_id).then(data => {
         if (data.data > 0) {
 
-            newmessages.value = true
+            newmessages.value = user_id
         } else {
 
-            newmessages.value = false
+            newmessages.value = 0
         }
     })
 

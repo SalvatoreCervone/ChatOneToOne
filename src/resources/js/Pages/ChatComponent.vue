@@ -14,8 +14,8 @@
         </div>
         <hr />
         <div v-if="!iconizza">
-            <Friendslist v-if="props.currentUser" v-show="friendslist" :currentUser="props.currentUser"
-                @user="userselected">
+            <Friendslist v-if="props.currentUser" :open="friendslist" v-show="friendslist"
+                :currentUser="props.currentUser" @user="userselected">
             </Friendslist>
 
             <ChatMessage v-if="friend && chatmessages" v-show="chatmessages" @chiudichat="chiudichat" :friend="friend"
@@ -52,7 +52,7 @@ function userselected(val) {
     // getmessages(val.id);
 }
 
-function chiudichat() {
+function chiudichat(val) {
     friendslist.value = true;
     chatmessages.value = false;
 
