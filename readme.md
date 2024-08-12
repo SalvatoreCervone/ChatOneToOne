@@ -40,8 +40,8 @@ composer require salvatorecervone/chatonetoone
 
 If you would publish for change normal use of:
 
-Controllers
-Models
+1.Controllers
+2.Models
 
 you use:
 
@@ -95,7 +95,7 @@ php artisan reverb:start
 
 Now you have Controllers, Models, Migrations and Vue components for Chat one to one
 
-The components is locate in resources/js/Pages/
+The components is locate in resources/js/Pages/chatonetoone/
 
 The component ChatComponent is the start component for Chat
 
@@ -105,7 +105,7 @@ and view chat run
 
 ## Remember
 
-In production change ip in file .env
+In production change ip, or name, in file .env of REVERB_HOST
 
 ```bash
 KEY -> REVERB_HOST
@@ -113,7 +113,7 @@ KEY -> REVERB_HOST
 
 with the ip where application websocket installed
 
-if the server is one, for application and chat, you would write new env parameter
+if the server is one, for application and chat, you would write new env key
 
 ```bash
 APP_URL_NO_SCHEMA=127.0.0.1
