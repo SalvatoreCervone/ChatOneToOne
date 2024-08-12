@@ -49,7 +49,7 @@ const props = defineProps({
 });
 
 function nuovomessaggio(user_id) {
-    if (open) {
+    if (props.open) {
 
         setnewmessage.value = newmessage.value.includes(user_id) ? user_id : 0;
     } else {
