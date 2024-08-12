@@ -4,7 +4,7 @@ use App\Models\User;
 // use App\Events\MessageSent;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\ChatMessageController;
-use SalvatoreCervone\ChatOneToOne\Controllers\ChatMessageController;
+use SalvatoreCervone\ChatOneToOne\Http\Controllers\ChatMessageController;
 use SalvatoreCervone\ChatOneToOne\Models\ChatMessage;
 use SalvatoreCervone\ChatOneToOne\Events\MessageSent;
 // use App\Models\ChatMessage;
