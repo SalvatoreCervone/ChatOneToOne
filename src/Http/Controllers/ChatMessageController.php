@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+// namespace App\Http\Controllers;
 
-use App\Models\User;
+namespace SalvatoreCervone\ChatOneToOne\Controllers;
+
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 
 class ChatMessageController extends Controller
 {
-    function index(User $friend = null)
+    function index()
     {
         return  Inertia::render('Dashboard', [
             'authuser' => auth()->user(),
