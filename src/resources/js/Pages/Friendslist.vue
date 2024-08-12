@@ -40,7 +40,7 @@ import NewMessage from "./NewMessage.vue";
 const emit = defineEmits(["user"]);
 const users = ref([]);
 const newmessage = ref([]);
-const setnewmessage = ref(false);
+const setnewmessage = ref(0);
 const force = ref(false);
 
 const props = defineProps({
@@ -48,7 +48,7 @@ const props = defineProps({
 });
 
 function nuovomessaggio(user_id) {
-    setnewmessage.value = newmessage.value.includes(user_id);
+    setnewmessage.value = newmessage.value.includes(user_id) ? user_id : 0;
 };
 
 

@@ -2,13 +2,11 @@
 
 use App\Models\User;
 use Carbon\Carbon;
-// use App\Events\MessageSent;
+use App\Events\MessageSent;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\ChatMessageController;
 use SalvatoreCervone\ChatOneToOne\Http\Controllers\ChatMessageController;
 use SalvatoreCervone\ChatOneToOne\Models\ChatMessage;
-use SalvatoreCervone\ChatOneToOne\Events\MessageSent;
-// use App\Models\ChatMessage;
+// use SalvatoreCervone\ChatOneToOne\Events\MessageSent;;
 
 // Route::prefix('http://10.119.179.171')->group(function () {
 // require __DIR__ . '/auth.php';

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace SalvatoreCervone\ChatOneToOne\Controllers;
+namespace SalvatoreCervone\ChatOneToOne\Http\Controllers;
 
 use Inertia\Inertia;
-use App\Http\Controllers;
+use App\Http\Controllers\Controller;
 
 class ChatMessageController extends Controller
 {

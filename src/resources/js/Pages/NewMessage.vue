@@ -6,7 +6,7 @@
 import { ref, defineProps, watch } from 'vue'
 const props = defineProps({
     friend_id: null,
-    newmessages: { type: Boolean, default: false },
+    newmessages: { type: Number, default: 0 },
     force: false
 
 })
@@ -23,16 +23,20 @@ watch(() => props.friend_id, () => {
 })
 
 watch(() => props.force, () => {
-    newmessages.value = props.newmessages
+    check()
 }, {
     immediate: true
 })
 
 watch(() => props.newmessages, () => {
-    newmessages.value = props.newmessages
+    check()
 }, {
     immediate: true
 })
+
+function check() {
+    newmessages.value = props.newmessages == props.friend_id
+}
 
 function messagestoread(user_id) {
 

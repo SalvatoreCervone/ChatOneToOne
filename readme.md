@@ -10,6 +10,16 @@ Laravel Reverb
 
 https://laravel.com/docs/11.x/reverb#main-content
 
+Carbon
+
+https://carbon.nesbot.com/
+
+Moment
+
+https://momentjs.com/
+
+For use actual css and graph install
+
 Prime vue
 
 https://primevue.org/vite/
@@ -28,22 +38,31 @@ composer require salvatorecervone/chatonetoone
 
 ## Publishs
 
+If you would publish for change normal use of:
+
+Controllers
+Models
+
+you use:
+
 Publish controller
 
 ```bash
 php artisan vendor:publish --tag=controller-chatonetoone
 ```
 
-Publish vue component
-
-```bash
-php artisan vendor:publish --tag=vue-chatonetoone
-```
-
 Publish model
 
 ```bash
 php artisan vendor:publish --tag=model-chatonetoone
+```
+
+### Its obligatory
+
+Publish vue component
+
+```bash
+php artisan vendor:publish --tag=vue-chatonetoone
 ```
 
 Publish event
@@ -65,6 +84,7 @@ Call migrations
 ```bash
 php artisan migrate
 ```
+
 ## Usage
 
 Start server websocket
@@ -79,22 +99,30 @@ The components is locate in resources/js/Pages/
 
 The component ChatComponent is the start component for Chat
 
-Go to route {APP_URL}/chats 
+Go to route {APP_URL}/chats
 
 and view chat run
 
 ## Remember
 
-In production change ip in file .env 
+In production change ip in file .env
+
 ```bash
 KEY -> REVERB_HOST
 ```
+
 with the ip where application websocket installed
 
-if the server is one, for application and chat, you would write 
+if the server is one, for application and chat, you would write new env parameter
 
 ```bash
-REVERB_HOST="${APP_URL}"
+APP_URL_NO_SCHEMA=127.0.0.1
+```
+
+and apply with
+
+```bash
+REVERB_HOST="${APP_URL_NO_SCHEMA}"
 ```
 
 ## Security
