@@ -77,7 +77,7 @@ Now you have Controllers, Models, Migrations and Vue components for Chat one to 
 
 The components is locate in resources/js/Pages/
 
-The component ChatComponent2 is the start component for Chat
+The component ChatComponent is the start component for Chat
 
 Go to route {APP_URL}/chats 
 

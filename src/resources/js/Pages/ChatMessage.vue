@@ -52,6 +52,7 @@ import { ref, defineProps, watch, onMounted, nextTick, defineEmits } from 'vue'
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import Stascrivendo from "./Stascrivendo.vue";
+import moment from 'moment'
 const props = defineProps({
     currentUser: null,
     friend: null
@@ -67,10 +68,12 @@ onMounted(() => {
     Echo.private(`chat.${props.currentUser.id}`).listen(
         "MessageSent",
         (response) => {
+
             messages.value.push(response.message);
+            messagesread(response.message.sender_id)
         }
     );
-
+    messagesread(props.friend.id)
     getmessages(props.friend.id)
 });
 
@@ -115,6 +118,15 @@ function chiudichat() {
 function getmessages(user_id) {
     axios.get(`/messages/${user_id}`).then((response) => {
         messages.value = response.data;
+    });
+}
+function messagesread(user_id) {
+
+    axios.post('/messages/receiver/read', {
+        friend_id: user_id,
+        readtime: moment().format('YYYY-MM-DD kk:mm')
+    }).then((response) => {
+
     });
 }
 </script>

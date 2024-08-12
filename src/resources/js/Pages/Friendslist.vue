@@ -18,7 +18,10 @@
 
                     </div>
                     <div class="self-center ml-5">
-                        <i v-if="nuovomessaggio(user.id)" class="pi pi-comment"></i>
+
+
+                        <NewMessage :force="force" :newmessages="setnewmessage" :friend_id="user.id"></NewMessage>
+                        <!-- <i v-if="nuovomessaggio(user.id)" class="pi pi-comment"></i> -->
                     </div>
                 </div>
                 <Stascrivendo :current_user_id="props.currentUser.id" :friend="user"></Stascrivendo>
@@ -31,26 +34,32 @@
     </div>
 </template>
 <script setup>
-import { ref, onMounted, defineEmits, defineProps, computed } from "vue";
+import { ref, onMounted, defineEmits, defineProps } from "vue";
 import Stascrivendo from "./Stascrivendo.vue";
+import NewMessage from "./NewMessage.vue";
 const emit = defineEmits(["user"]);
 const users = ref([]);
 const newmessage = ref([]);
+const setnewmessage = ref(false);
+const force = ref(false);
 
 const props = defineProps({
     currentUser: { type: Object, required: true },
 });
 
-const nuovomessaggio = function (user_id) {
-    return newmessage.value.includes(user_id);
+function nuovomessaggio(user_id) {
+    setnewmessage.value = newmessage.value.includes(user_id);
 };
+
+
 
 onMounted(() => {
 
     axios.get("/users").then((data) => {
         users.value = data.data;
-
     });
+
+
 
     Echo.join('users')
         .here((usersonline) => {
@@ -75,18 +84,24 @@ onMounted(() => {
 
     Echo.private(`chat.${props.currentUser.id}`)
         .listen("MessageSent", (response) => {
+
             newmessage.value.push(response.message.sender_id);
+            nuovomessaggio(response.message.sender_id)
 
         });
 
 });
+
+
+
 
 function aprichat(user) {
     const index = newmessage.value.indexOf(user.id);
     if (index > -1) {
         newmessage.value.splice(index, 1);
     }
-    // newmessage.value = false
+    setnewmessage.value = false
+    force.value = true
     emit("user", user);
 }
 
