@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Events;
+namespace SalvatoreCervone\ChatOneToOne\Events;
 
-use App\Models\ChatMessage;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use SalvatoreCervone\ChatOneToOne\Models\ChatMessage;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
 class MessageSent implements ShouldBroadcastNow
 {
