@@ -11,13 +11,13 @@ use SalvatoreCervone\ChatOneToOne\Events\MessageSent;
 
 // Route::prefix('http://10.119.179.171')->group(function () {
 // require __DIR__ . '/auth.php';
-Route::middleware(['web','auth'])->group(function () {
+Route::middleware(['web', 'auth'])->group(function () {
 
     Route::get('/users', function () {
         return User::where('id', "!=", auth()->user()->id)->get();
     })->name('users');
 
-    Route::get('/chats', [ChatMessageController::class, 'index'])->name('chats');
+    Route::get('/', [ChatMessageController::class, 'index'])->name('dashboard');
 
     Route::get('/chat/{friend}', function (User $friend) {
         return view('chat', [
@@ -49,6 +49,47 @@ Route::middleware(['web','auth'])->group(function () {
         broadcast(new MessageSent($message));
 
         return  $message;
+    });
+    Route::post('/messages/receiver/read', function () {
+        $friend_id = request()->input('friend_id');
+        $readtime = request()->input('readtime');
+        return ChatMessage::query()
+            ->where(function ($q) use ($friend_id) {
+                //TROVA LA CHAT DOVE SONO CONINVOLTI CHI è AUTENTICATO
+                //E L'AMICO INTERESSATO
+                $q->where(function ($query) use ($friend_id) {
+                    $query->where('sender_id', auth()->id())
+                        ->where('receiver_id', $friend_id);
+                })
+                    ->orWhere(function ($query) use ($friend_id) {
+                        $query->where('sender_id', $friend_id)
+                            ->where('receiver_id', auth()->id());
+                    });
+            })
+            ->where('receiver_id', auth()->id())
+            ->where('created_at', '<=', $readtime)
+            ->whereNull('read')
+            ->update(['read' => Carbon::now()->format('Y-m-d')]);
+    });
+    Route::get('/messages/receiver/toread/{friend_id}', function ($friend_id) {
+
+        return ChatMessage::query()
+            ->where(function ($q) use ($friend_id) {
+                //TROVA LA CHAT DOVE SONO CONINVOLTI CHI è AUTENTICATO
+                //E L'AMICO INTERESSATO
+                $q->where(function ($query) use ($friend_id) {
+                    $query->where('sender_id', auth()->id())
+                        ->where('receiver_id', $friend_id);
+                })
+                    ->orWhere(function ($query) use ($friend_id) {
+                        $query->where('sender_id', $friend_id)
+                            ->where('receiver_id', auth()->id());
+                    });
+            })
+            ->where('receiver_id', auth()->id())
+
+            ->whereNull('read')
+            ->count();
     });
 });
 // });
