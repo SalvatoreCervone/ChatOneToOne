@@ -14,18 +14,19 @@ Route::middleware(['web', 'auth'])->group(function () {
     })->name('users');
 
     Route::get('/users/chat', function () {
-        $receiver_lista = ChatMessage::select("users.id", 'users.name', 'users.email', 'chat_messages.created_at')
+        $receiver_lista = ChatMessage::select("users.id", 'users.name', 'users.email')
             ->where('sender_id', auth()->id())
             //->orWhere('receiver_id', auth()->id())
             ->join('users', 'users.id', '=', 'receiver_id');
 
 
-        $sender_lista = ChatMessage::select("users.id", 'users.name', 'users.email', 'chat_messages.created_at')
+        $sender_lista = ChatMessage::select("users.id", 'users.name', 'users.email')
             ->where('receiver_id', auth()->id())
             //->orWhere('receiver_id', auth()->id())
             ->join('users', 'users.id', '=', 'sender_id')
             ->union($receiver_lista)
-            ->orderBy('created_at', 'desc')
+            //->orderBy('chat_messages.created_at', 'desc')
+            ->distinct()
             ->get();
 
         return $sender_lista;
