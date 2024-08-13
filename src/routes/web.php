@@ -41,8 +41,6 @@ Route::middleware(['web', 'auth'])->group(function () {
             ->whereNull('read')
             ->orderBy('created_at', 'desc')
             ->count();
-
-
     })->name('userschatcount');
 
     Route::get('/chats', [ChatMessageController::class, 'index'])->name('chats');
@@ -120,4 +118,3 @@ Route::middleware(['web', 'auth'])->group(function () {
             ->count();
     });
 });
-

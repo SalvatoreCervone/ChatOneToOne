@@ -2,7 +2,7 @@
     <div id="chatbox" :class="{ 'altezza0': iconizza }">
         <div id="chatmenu" class="grid grid-cols-3 grid-rows-1 text-center">
             <div v-if="messagetoread > 0" :class="[{ 'selezionato': friendslistchat }]" title="Le tue chat">
-
+                <Badge class="absolute left-[85px]">{{ messagetoread }}</Badge>
                 <i v-badge="messagetoread" class="pi pi-inbox " @click="chiudichat"></i>
             </div>
             <div v-else :class="[{ 'selezionato': friendslistchat }]" title="Le tue chat">
@@ -46,7 +46,7 @@ import { onMounted, ref } from 'vue'
 import Friendslist from "./Friendslist.vue";
 import FriendslistChat from "./FriendslistChat.vue";
 import ChatMessage from "./ChatMessage.vue"
-
+import Badge from "primevue/badge";
 
 const props = defineProps({
     currentUser: {
