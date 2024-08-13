@@ -6,17 +6,32 @@ use App\Events\MessageSent;
 use Illuminate\Support\Facades\Route;
 use SalvatoreCervone\ChatOneToOne\Http\Controllers\ChatMessageController;
 use SalvatoreCervone\ChatOneToOne\Models\ChatMessage;
-// use SalvatoreCervone\ChatOneToOne\Events\MessageSent;;
 
-// Route::prefix('http://10.119.179.171')->group(function () {
-// require __DIR__ . '/auth.php';
 Route::middleware(['web', 'auth'])->group(function () {
 
     Route::get('/users', function () {
         return User::where('id', "!=", auth()->user()->id)->get();
     })->name('users');
 
-    Route::get('/', [ChatMessageController::class, 'index'])->name('dashboard');
+    Route::get('/users/chat', function () {
+        $receiver_lista = ChatMessage::select("users.id", 'users.name', 'users.email', 'chat_messages.created_at')
+            ->where('sender_id', auth()->id())
+            //->orWhere('receiver_id', auth()->id())
+            ->join('users', 'users.id', '=', 'receiver_id');
+
+
+        $sender_lista = ChatMessage::select("users.id", 'users.name', 'users.email', 'chat_messages.created_at')
+            ->where('receiver_id', auth()->id())
+            //->orWhere('receiver_id', auth()->id())
+            ->join('users', 'users.id', '=', 'sender_id')
+            ->union($receiver_lista)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return $sender_lista;
+    })->name('userschat');
+
+    Route::get('/chats', [ChatMessageController::class, 'index'])->name('chats');
 
     Route::get('/chat/{friend}', function (User $friend) {
         return view('chat', [
@@ -91,10 +106,4 @@ Route::middleware(['web', 'auth'])->group(function () {
             ->count();
     });
 });
-// });
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });

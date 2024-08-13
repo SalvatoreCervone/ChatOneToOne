@@ -1,8 +1,6 @@
 <template>
     <div id="friendslist">
-        <InputText :modelValue="ricercautente_term" @update:modelValue="ricercautente_term = $event"
-            class="w-full rounded-none" placeholder="Ricerca utente..." @keyup="ricercautente"></InputText>
-        <div id="friends" v-for="user in usersfilter" :key="user.id">
+        <div id="friends" v-for="user in users" :key="user.id">
             <div class="p-5">
                 <div class="flex" @click="aprichat(user)">
                     <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" /> -->
@@ -39,14 +37,11 @@
 import { ref, onMounted, defineEmits, defineProps } from "vue";
 import Stascrivendo from "./Stascrivendo.vue";
 import NewMessage from "./NewMessage.vue";
-import InputText from "primevue/inputtext"
 const emit = defineEmits(["user"]);
 const users = ref([]);
-const usersfilter = ref([]);
 const newmessage = ref([]);
 const setnewmessage = ref(0);
 const force = ref(false);
-const ricercautente_term = ref("");
 
 const props = defineProps({
     currentUser: { type: Object, required: true },
@@ -66,9 +61,8 @@ function nuovomessaggio(user_id) {
 
 onMounted(() => {
 
-    axios.get("/users").then((data) => {
+    axios.get("/users/chat").then((data) => {
         users.value = data.data;
-        usersfilter.value = data.data
     });
 
 
@@ -105,24 +99,7 @@ onMounted(() => {
 });
 
 
-function ricercautente() {
-    if (ricercautente_term.value.length > 0) {
-        let terms = ricercautente_term.value.split(" ");
-        terms.map(function (term) {
-            if (term.length > 0) {
 
-                let find = users.value.map(function (user) {
-                    let nominativo = user.name + " " + user.cognome
-                    return nominativo.includes(term) ? user : null;
-                })
-                usersfilter.value = find.filter(n => n)
-            }
-        })
-    } else {
-        usersfilter.value = users.value
-    }
-
-}
 
 function aprichat(user) {
     const index = newmessage.value.indexOf(user.id);
