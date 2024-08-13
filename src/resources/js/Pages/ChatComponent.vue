@@ -1,9 +1,13 @@
 <template>
     <div id="chatbox" :class="{ 'altezza0': iconizza }">
         <div id="chatmenu" class="grid grid-cols-3 grid-rows-1 text-center">
-            <div :class="[{ 'selezionato': friendslistchat }]" title="Le tue chat">
+            <div v-if="messagetoread > 0" :class="[{ 'selezionato': friendslistchat }]" title="Le tue chat">
 
-                <i class="pi pi-inbox" @click="chiudichat"></i>
+                <i v-badge="messagetoread" class="pi pi-inbox " @click="chiudichat"></i>
+            </div>
+            <div v-else :class="[{ 'selezionato': friendslistchat }]" title="Le tue chat">
+
+                <i class="pi pi-inbox " @click="chiudichat"></i>
             </div>
             <div :class="[{ 'selezionato': friendslist }]" title="Ricerca utente">
 
@@ -29,19 +33,20 @@
                 :currentUser="props.currentUser" @user="userselected">
             </Friendslist>
 
-            <ChatMessage v-if="friend && chatmessages" v-show="chatmessages" @chiudichat="chiudichat" :friend="friend"
-                :currentUser="currentUser" id="chatview"></ChatMessage>
+            <ChatMessage v-if="friend && chatmessages" v-show="chatmessages" @chiudichat="chiudichat"
+                @letturaeffettuata="letturaeffettuata" :friend="friend" :currentUser="currentUser" id="chatview">
+            </ChatMessage>
         </div>
 
     </div>
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue'
 import Friendslist from "./Friendslist.vue";
 import FriendslistChat from "./FriendslistChat.vue";
 import ChatMessage from "./ChatMessage.vue"
 
-import { ref } from "vue";
 
 const props = defineProps({
     currentUser: {
@@ -56,7 +61,11 @@ const friendslistchat = ref(true);
 const chatmessages = ref(false);
 const friend = ref(null);
 const iconizza = ref(false);
+const messagetoread = ref(0);
 
+onMounted(() => {
+    getmessagetoread();
+})
 
 function userselected(val) {
     friend.value = val;
@@ -73,6 +82,11 @@ function chiudichat(val) {
 
 }
 
+
+function letturaeffettuata() {
+    getmessagetoread()
+}
+
 function iconizzachat() {
     iconizza.value = !iconizza.value
 }
@@ -82,6 +96,14 @@ function ricercautenti() {
     friendslistchat.value = false;
     chatmessages.value = false;
 }
+
+function getmessagetoread() {
+    axios.get('/users/chat/count').then(data => {
+        messagetoread.value = data.data
+    })
+}
+
+
 
 
 

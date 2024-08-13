@@ -31,6 +31,20 @@ Route::middleware(['web', 'auth'])->group(function () {
         return $sender_lista;
     })->name('userschat');
 
+    Route::get('/users/chat/count', function () {
+
+
+
+        return ChatMessage::select("users.id", 'users.name', 'users.email', 'chat_messages.created_at')
+            ->join('users', 'users.id', '=', 'sender_id')
+            ->where('receiver_id', auth()->id())
+            ->whereNull('read')
+            ->orderBy('created_at', 'desc')
+            ->count();
+
+
+    })->name('userschatcount');
+
     Route::get('/chats', [ChatMessageController::class, 'index'])->name('chats');
 
     Route::get('/chat/{friend}', function (User $friend) {

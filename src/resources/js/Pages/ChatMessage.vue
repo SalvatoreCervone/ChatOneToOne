@@ -58,7 +58,7 @@ const props = defineProps({
     friend: null
 })
 
-const emit = defineEmits(['chiudichat'])
+const emit = defineEmits(['chiudichat', 'letturaeffettuata'])
 // const chatmessages = ref(false);
 const messages = ref([]);
 const newMessage = ref("");
@@ -126,7 +126,7 @@ function messagesread(user_id) {
         friend_id: user_id,
         readtime: moment().format('YYYY-MM-DD kk:mm')
     }).then((response) => {
-
+        emit('letturaeffettuata', true)
     });
 }
 </script>
