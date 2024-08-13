@@ -10,11 +10,12 @@ use SalvatoreCervone\ChatOneToOne\Models\ChatMessage;
 Route::middleware(['web', 'auth'])->group(function () {
 
     Route::get('/users', function () {
-        return User::where('id', "!=", auth()->user()->id)->get();
+        $model_user = app(config('chatonetoone.model_user'));
+        return $model::where('id', "!=", auth()->user()->id)->get();
     })->name('users');
 
     Route::get('/users/chat', function () {
-        $receiver_lista = ChatMessage::select("users.id", 'users.name', 'users.email')
+        $receiver_lista = ChatMessage::select(config('chatonetoone.columns_user'))
             ->where('sender_id', auth()->id())
             //->orWhere('receiver_id', auth()->id())
             ->join('users', 'users.id', '=', 'receiver_id');
@@ -33,9 +34,6 @@ Route::middleware(['web', 'auth'])->group(function () {
     })->name('userschat');
 
     Route::get('/users/chat/count', function () {
-
-
-
         return ChatMessage::select("users.id", 'users.name', 'users.email', 'chat_messages.created_at')
             ->join('users', 'users.id', '=', 'sender_id')
             ->where('receiver_id', auth()->id())
