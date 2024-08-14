@@ -99,7 +99,8 @@ const sendTypingEvent = () => {
 const sendMessage = () => {
     if (newMessage.value.trim() !== "") {
         axios
-            .post(`/messages/${props.friend.id}`, {
+            .post('/messages/', {
+                friend_id: props.friend.id,
                 message: newMessage.value,
             })
             .then((response) => {
