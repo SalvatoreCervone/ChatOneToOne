@@ -54,6 +54,10 @@ const props = defineProps({
         required: true,
         default: null
     },
+    chat_closed: {
+        type: Boolean,
+        default: true
+    }
 });
 
 const friendslist = ref(false);
@@ -64,6 +68,9 @@ const iconizza = ref(false);
 const messagetoread = ref(0);
 
 onMounted(() => {
+    if (props.chat_closed) {
+        iconizza.value = true
+    }
     getmessagetoread();
 })
 

@@ -11,7 +11,7 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     Route::get('/users', function () {
         $model_user = app(config('chatonetoone.model_user'));
-        return $model::where('id', "!=", auth()->user()->id)->get();
+        return $model_user::where('id', "!=", auth()->user()->id)->get();
     })->name('users');
 
     Route::get('/users/chat', function () {

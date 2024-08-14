@@ -22,7 +22,7 @@
                     <div class="self-center ml-5">
 
 
-                        <NewMessage :force="force" :newmessages="setnewmessage" :friend_id="user.id"></NewMessage>
+                        <!-- <NewMessage :force="force" :newmessages="setnewmessage" :friend_id="user.id"></NewMessage> -->
                         <!-- <i v-if="nuovomessaggio(user.id)" class="pi pi-comment"></i> -->
                     </div>
                 </div>
@@ -38,7 +38,7 @@
 <script setup>
 import { ref, onMounted, defineEmits, defineProps } from "vue";
 import Stascrivendo from "./Stascrivendo.vue";
-import NewMessage from "./NewMessage.vue";
+// import NewMessage from "./NewMessage.vue";
 import InputText from "primevue/inputtext"
 const emit = defineEmits(["user"]);
 const users = ref([]);
@@ -53,14 +53,14 @@ const props = defineProps({
     open: { type: Boolean, default: false }
 });
 
-function nuovomessaggio(user_id) {
-    if (props.open) {
+// function nuovomessaggio(user_id) {
+//     if (props.open) {
 
-        setnewmessage.value = newmessage.value.includes(user_id) ? user_id : 0;
-    } else {
-        setnewmessage.value = 0;
-    }
-};
+//         setnewmessage.value = newmessage.value.includes(user_id) ? user_id : 0;
+//     } else {
+//         setnewmessage.value = 0;
+//     }
+// };
 
 
 
@@ -94,13 +94,13 @@ onMounted(() => {
 
 
 
-    Echo.private(`chat.${props.currentUser.id}`)
-        .listen("MessageSent", (response) => {
+    // Echo.private(`chat.${props.currentUser.id}`)
+    //     .listen("MessageSent", (response) => {
 
-            newmessage.value.push(response.message.sender_id);
-            nuovomessaggio(response.message.sender_id)
+    //         newmessage.value.push(response.message.sender_id);
+    //         nuovomessaggio(response.message.sender_id)
 
-        });
+    //     });
 
 });
 
