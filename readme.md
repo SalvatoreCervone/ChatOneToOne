@@ -61,7 +61,7 @@ Publish model
 php artisan vendor:publish --tag=model-chatonetoone
 ```
 
-### Its obligatory
+### Its obligatory publish
 
 Publish vue component
 
@@ -73,6 +73,12 @@ Publish event
 
 ```bash
 php artisan vendor:publish --tag=event-chatonetoone
+```
+
+Publish config
+
+```bash
+php artisan vendor:publish --tag=config-chatonetoone
 ```
 
 Publish migration

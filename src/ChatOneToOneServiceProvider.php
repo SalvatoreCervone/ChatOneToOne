@@ -22,6 +22,7 @@ class ChatOneToOneServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/Http/Controllers' => app_path('Http/Controllers/')], 'controller-chatonetoone');
         $this->publishes([__DIR__ . '/Models' => app_path('Models/')], 'model-chatonetoone');
         $this->publishes([__DIR__ . '/Events' => app_path('Events/')], 'event-chatonetoone');
+        $this->publishes([__DIR__ . '/config' => config_path()], 'config-chatonetoone');
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {

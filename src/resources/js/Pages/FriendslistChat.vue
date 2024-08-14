@@ -27,10 +27,7 @@
                 <Stascrivendo :current_user_id="props.currentUser.id" :friend="user"></Stascrivendo>
             </div>
             <hr />
-        </div>
-        <!-- <div id="search">
-                <input type="text" id="searchfield" value="Ricerca contatto..." />
-            </div> -->
+        </div> 
     </div>
 </template>
 <script setup>
