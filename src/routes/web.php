@@ -16,18 +16,20 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     Route::get('/users/chat', function () use ($column_user) {
         $receiver_lista = ChatMessage::select($column_user)
-            ->where('sender_id', auth()->id())
-            //->orWhere('receiver_id', auth()->id())
-            ->join('users', 'users.id', '=', 'receiver_id');
+            ->join('users', 'users.id', '=', 'receiver_id')
+            ->whereNull('archive')
+            ->where('sender_id', auth()->id());
 
 
         $sender_lista = ChatMessage::select($column_user)
-            ->where('receiver_id', auth()->id())
             //->orWhere('receiver_id', auth()->id())
             ->join('users', 'users.id', '=', 'sender_id')
+            ->where('receiver_id', auth()->id())
+            ->whereNull('archive')
             ->union($receiver_lista)
             //->orderBy('chat_messages.created_at', 'desc')
-            ->distinct()->get();
+            ->distinct()
+            ->get();
 
         return $sender_lista;
     })->name('userschat');
@@ -41,7 +43,7 @@ Route::middleware(['web', 'auth'])->group(function () {
             ->count();
     })->name('userschatcount');
 
-    Route::get('/chats', [ChatMessageController::class, 'index'])->name('chats');   
+    Route::get('/chats', [ChatMessageController::class, 'index'])->name('chats');
 
     Route::get('/messages/{friend_id}', function ($friend_id) {
         return ChatMessage::query()

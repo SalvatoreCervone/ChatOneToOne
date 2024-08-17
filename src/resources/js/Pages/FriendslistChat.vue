@@ -1,9 +1,9 @@
 <template>
-    <div id="friendslist">
+    <div id="friendslist" v-if="users.length > 0">
         <div id="friends" v-for="user in users" :key="user.id">
             <div class="p-5">
                 <div class="flex" @click="aprichat(user)">
-                    <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" /> -->
+                   
                     <div class="self-center m-5">
                         <span v-if="user.status"><i class="pi pi-circle-fill text-green-500"></i></span>
                         <span v-else><i class="ml-3"></i></span>
@@ -21,17 +21,21 @@
 
 
                         <NewMessage :force="force" :newmessages="setnewmessage" :friend_id="user.id"></NewMessage>
-                        <!-- <i v-if="nuovomessaggio(user.id)" class="pi pi-comment"></i> -->
+                       
                     </div>
                 </div>
                 <Stascrivendo :current_user_id="props.currentUser.id" :friend="user"></Stascrivendo>
             </div>
             <hr />
-        </div> 
+        </div>
+    </div>
+    <div v-else>
+        Nessuna chat presente
     </div>
 </template>
 <script setup>
-import { ref, onMounted, defineEmits, defineProps } from "vue";
+
+import { ref, onMounted, defineEmits, defineProps, watch } from "vue";
 import Stascrivendo from "./Stascrivendo.vue";
 import NewMessage from "./NewMessage.vue";
 const emit = defineEmits(["user"]);
@@ -42,7 +46,8 @@ const force = ref(false);
 
 const props = defineProps({
     currentUser: { type: Object, required: true },
-    open: { type: Boolean, default: false }
+    open: { type: Boolean, default: false },
+    online: { type: Array, default: [] }
 });
 
 function nuovomessaggio(user_id) {
@@ -54,35 +59,17 @@ function nuovomessaggio(user_id) {
     }
 };
 
-
+watch(() => props.online, () => {
+    console.log("modificato", props.online)
+    checkonlineList(props.online)
+}, { immediate: true, deep: true })
 
 onMounted(() => {
 
     axios.get("/users/chat").then((data) => {
         users.value = data.data;
+        checkonlineList(props.online)
     });
-
-
-
-    Echo.join('users')
-        .here((usersonline) => {
-            console.log('here', usersonline)
-            checkonlineList(usersonline)
-        })
-        .joining((useronline) => {
-            console.log('joining', useronline)
-            checkonline(useronline)
-
-        })
-        .leaving((useronline) => {
-            console.log('leaving', useronline)
-
-            checkoffline(useronline)
-
-        }).error(function (error) {
-            console.log(error)
-        })
-
 
 
     Echo.private(`chat.${props.currentUser.id}`)
@@ -95,32 +82,10 @@ onMounted(() => {
 
 });
 
-
-
-
 function aprichat(user) {
-    const index = newmessage.value.indexOf(user.id);
-    if (index > -1) {
-        newmessage.value.splice(index, 1);
-    }
-    setnewmessage.value = 0
-    force.value = true
     emit("user", user);
 }
 
-function checkonline(useronline) {
-    users.value.map(function (user) {
-        // usersonline.find(function (useronline) {
-
-        if (user.id == useronline.id) {
-            user.status = true
-        } else {
-            user.status = false
-
-        }
-        // })
-    })
-}
 function checkonlineList(usersonline) {
 
     users.value.map(function (user) {
@@ -133,17 +98,6 @@ function checkonlineList(usersonline) {
 
         }
         return user
-    })
-
-}
-function checkoffline(usersonline) {
-    users.value.map(function (user) {
-        // usersonline.find(function (useronline) {
-
-        if (user.id == usersonline.id) {
-            user.status = false
-        }
-        // })
     })
 }
 </script>

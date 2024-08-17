@@ -1,6 +1,7 @@
 <template>
     <div id="chatbox" :class="{ 'altezza0': iconizza }">
         <div id="chatmenu" class="grid grid-cols-3 grid-rows-1 text-center">
+
             <div v-if="messagetoread > 0" :class="[{ 'selezionato': friendslistchat }]" title="Le tue chat">
                 <Badge class="absolute left-[85px]">{{ messagetoread }}</Badge>
                 <i v-badge="messagetoread" class="pi pi-inbox " @click="chiudichat"></i>
@@ -14,10 +15,6 @@
                 <i class="pi pi-users" @click="ricercautenti"></i>
             </div>
 
-
-            <!-- <DropdownLink :href="route('logout')" method="post" as="button">
-                Log Out
-            </DropdownLink> -->
             <div>
 
                 <i class="pi pi-minus-circle text-yellow-500" v-if="!iconizza" @click="iconizzachat"></i>
@@ -26,15 +23,16 @@
         </div>
         <hr />
         <div v-if="!iconizza">
-            <FriendslistChat v-if="props.currentUser" :open="friendslistchat" v-show="friendslistchat"
+
+            <FriendslistChat v-if="props.currentUser && friendslistchat" :open="friendslistchat" :online="onlineuser"
                 :currentUser="props.currentUser" @user="userselected">
             </FriendslistChat>
-            <Friendslist v-if="props.currentUser" :open="friendslist" v-show="friendslist"
+            <Friendslist v-if="props.currentUser && friendslist" :open="friendslist" :online="onlineuser"
                 :currentUser="props.currentUser" @user="userselected">
             </Friendslist>
 
-            <ChatMessage v-if="friend && chatmessages" v-show="chatmessages" @chiudichat="chiudichat"
-                @letturaeffettuata="letturaeffettuata" :friend="friend" :currentUser="currentUser" id="chatview">
+            <ChatMessage v-if="friend && chatmessages" @chiudichat="chiudichat" @letturaeffettuata="letturaeffettuata"
+                :friend="friend" :currentUser="props.currentUser" id="chatview">
             </ChatMessage>
         </div>
 
@@ -66,13 +64,51 @@ const chatmessages = ref(false);
 const friend = ref(null);
 const iconizza = ref(false);
 const messagetoread = ref(0);
+const onlineuser = ref([])
 
 onMounted(() => {
+
+    Echo.join('users')
+        .here((usersonline) => {
+            console.log('here', usersonline)
+            onlineuser.value = usersonline
+        })
+        .joining((useronline) => {
+            console.log('joining', useronline)
+            checkonline(useronline)
+
+        })
+        .leaving((useronline) => {
+            console.log('leaving', useronline)
+
+            checkoffline(useronline)
+
+        }).error(function (error) {
+            console.log(error)
+        });
+
+    Echo.private(`chat.${props.currentUser.id}`)
+        .listen("MessageSent", (response) => {
+            if (chatmessages.value == false) {
+                messagetoread.value += 1;
+            }
+        });
+
     if (props.chat_closed) {
         iconizza.value = true
     }
     getmessagetoread();
 })
+
+function checkonline(useronline) {
+    onlineuser.value.push(useronline)
+}
+
+function checkoffline(usersonline) {
+    onlineuser.value = onlineuser.value.filter(function (user) {
+        return user.id != usersonline.id
+    })
+}
 
 function userselected(val) {
     friend.value = val;

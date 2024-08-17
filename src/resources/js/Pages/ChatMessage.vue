@@ -65,14 +65,11 @@ const newMessage = ref("");
 const messagesContainer = ref(null);
 
 onMounted(() => {
-    Echo.private(`chat.${props.currentUser.id}`).listen(
-        "MessageSent",
-        (response) => {
-
+    Echo.private(`chat.${props.currentUser.id}`)
+        .listen("MessageSent", (response) => {
             messages.value.push(response.message);
-            messagesread(response.message.sender_id)
-        }
-    );
+
+        });
     messagesread(props.friend.id)
     getmessages(props.friend.id)
 });
@@ -99,7 +96,7 @@ const sendTypingEvent = () => {
 const sendMessage = () => {
     if (newMessage.value.trim() !== "") {
         axios
-            .post('/messages/', {
+            .post('/messages', {
                 friend_id: props.friend.id,
                 message: newMessage.value,
             })
@@ -111,8 +108,6 @@ const sendMessage = () => {
 };
 
 function chiudichat() {
-    // friendslist.value = true;
-    // chatmessages.value = false;
     emit('chiudichat', true);
 }
 
