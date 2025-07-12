@@ -14,7 +14,7 @@
     "ChatOneToOne"
   ],
   "require": {    
-    "laravel/framework": "^11.0|12",
+    "laravel/framework": "^11 || ^12",
     "laravel/reverb": "@beta"
   },
   "require-dev": {
