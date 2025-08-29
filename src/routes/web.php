@@ -17,7 +17,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/users/chat', function () use ($column_user) {
         $receiver_lista = ChatMessage::select($column_user)
             ->join('users', 'users.id', '=', 'receiver_id')
-            ->whereNull('archive')
+            // ->whereNull('archive')
             ->where('sender_id', auth()->id());
 
 
@@ -25,7 +25,7 @@ Route::middleware(['web', 'auth'])->group(function () {
             //->orWhere('receiver_id', auth()->id())
             ->join('users', 'users.id', '=', 'sender_id')
             ->where('receiver_id', auth()->id())
-            ->whereNull('archive')
+            // ->whereNull('archive')
             ->union($receiver_lista)
             //->orderBy('chat_messages.created_at', 'desc')
             ->distinct()
@@ -78,20 +78,21 @@ Route::middleware(['web', 'auth'])->group(function () {
         $friend_id = request()->input('friend_id');
         $readtime = request()->input('readtime');
         return ChatMessage::query()
-            ->where(function ($q) use ($friend_id) {
-                //TROVA LA CHAT DOVE SONO CONINVOLTI CHI è AUTENTICATO
-                //E L'AMICO INTERESSATO
-                $q->where(function ($query) use ($friend_id) {
-                    $query->where('sender_id', auth()->id())
-                        ->where('receiver_id', $friend_id);
-                })
-                    ->orWhere(function ($query) use ($friend_id) {
-                        $query->where('sender_id', $friend_id)
-                            ->where('receiver_id', auth()->id());
-                    });
-            })
+            // ->where(function ($q) use ($friend_id) {
+            //     //TROVA LA CHAT DOVE SONO CONINVOLTI CHI è AUTENTICATO
+            //     //E L'AMICO INTERESSATO
+            //     $q->where(function ($query) use ($friend_id) {
+            //         $query->where('sender_id', auth()->id())
+            //             ->where('receiver_id', $friend_id);
+            //     })
+            //         ->orWhere(function ($query) use ($friend_id) {
+            //             $query->where('sender_id', $friend_id)
+            //                 ->where('receiver_id', auth()->id());
+            //         });
+            // })
+            ->where('sender_id', $friend_id)
             ->where('receiver_id', auth()->id())
-            ->where('created_at', '<=', $readtime)
+            // ->where('created_at', '<=', $readtime)
             ->whereNull('read')
             ->update(['read' => Carbon::now()->format('Y-m-d')]);
     });
