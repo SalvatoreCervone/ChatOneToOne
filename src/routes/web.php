@@ -11,7 +11,9 @@ Route::middleware(['web', 'auth'])->group(function () {
     $column_user = config('chatonetoone.columns_user');
     Route::get('/users', function () use ($model_user) {
 
-        return $model_user::where('id', "!=", auth()->user()->id)->get();
+        return $model_user::where('id', "!=", auth()->user()->id)
+        ->whereNull('deteted_at')
+        ->get();
     })->name('users');
 
     Route::get('/users/chat', function () use ($column_user) {
