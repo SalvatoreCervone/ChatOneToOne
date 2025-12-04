@@ -12,7 +12,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/users', function () use ($model_user) {
 
         return $model_user::where('id', "!=", auth()->user()->id)
-        ->whereNull('deteted_at')
+        ->whereNull('deleted_at')
         ->get();
     })->name('users');
 
