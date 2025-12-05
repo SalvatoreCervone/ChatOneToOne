@@ -93,7 +93,7 @@ watch(
     nextTick(() => {
       messagesContainer.value.scrollTo({
         top: messagesContainer.value.scrollHeight,
-        behavior: "smooth",
+        // behavior: "smooth",
       });
     });
   },
