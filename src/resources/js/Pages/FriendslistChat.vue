@@ -19,9 +19,7 @@
           </div>
           <div class="self-center ml-5">
             <NewMessage
-              :force="force"
-              :newmessages="setnewmessage"
-              :friend_id="user.id"
+              :unread-count="user.unread_count"
             ></NewMessage>
           </div>
         </div>
@@ -44,9 +42,6 @@ import Stascrivendo from "./Stascrivendo.vue";
 import NewMessage from "./NewMessage.vue";
 const emit = defineEmits(["user"]);
 const users = ref([]);
-const newmessage = ref([]);
-const setnewmessage = ref(0);
-const force = ref(false);
 const searching = ref(false);
 
 const props = defineProps({
@@ -54,14 +49,6 @@ const props = defineProps({
   open: { type: Boolean, default: false },
   online: { type: Array, default: [] },
 });
-
-function nuovomessaggio(user_id) {
-  if (props.open) {
-    setnewmessage.value = newmessage.value.includes(user_id) ? user_id : 0;
-  } else {
-    setnewmessage.value = 0;
-  }
-}
 
 watch(
   () => props.online,
@@ -81,10 +68,12 @@ onMounted(() => {
   });
 
   Echo.private(`chat.${props.currentUser.id}`).listen(
-    "MessageSent",
+    ".MessageSent",
     (response) => {
-      newmessage.value.push(response.message.sender_id);
-      nuovomessaggio(response.message.sender_id);
+      const user = users.value.find(u => u.id == response.message.sender_id);
+      if (user) {
+        user.unread_count = (user.unread_count || 0) + 1;
+      }
     }
   );
 });

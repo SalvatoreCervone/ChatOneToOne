@@ -77,7 +77,7 @@ const messagesContainer = ref(null);
 
 onMounted(() => {
   Echo.private(`chat.${props.currentUser.id}`).listen(
-    "MessageSent",
+    ".MessageSent",
     (response) => {
       if (response.message.sender_id == props.friend.id)
         messages.value.push(response.message);

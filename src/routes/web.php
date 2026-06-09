@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use App\Events\MessageSent;
+use SalvatoreCervone\ChatOneToOne\Events\MessageSent;
 use Illuminate\Support\Facades\Route;
 use SalvatoreCervone\ChatOneToOne\Http\Controllers\ChatMessageController;
 use SalvatoreCervone\ChatOneToOne\Models\ChatMessage;
@@ -12,7 +12,6 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/users', function () use ($model_user) {
 
         return $model_user::where('id', "!=", auth()->user()->id)
-        ->whereNull('deleted_at')
         ->get();
     })->name('users');
 
@@ -33,15 +32,22 @@ Route::middleware(['web', 'auth'])->group(function () {
             ->distinct()
             ->get();
 
+        $unreadCounts = ChatMessage::where('receiver_id', auth()->id())
+            ->whereNull('read')
+            ->selectRaw('sender_id, count(*) as count')
+            ->groupBy('sender_id')
+            ->pluck('count', 'sender_id');
+
+        $sender_lista->each(function ($user) use ($unreadCounts) {
+            $user->unread_count = $unreadCounts->get($user->id, 0);
+        });
+
         return $sender_lista;
     })->name('userschat');
 
-    Route::get('/users/chat/count', function () use ($column_user) {
-        return ChatMessage::select($column_user)
-            ->join('users', 'users.id', '=', 'sender_id')
-            ->where('receiver_id', auth()->id())
+    Route::get('/users/chat/count', function () {
+        return ChatMessage::where('receiver_id', auth()->id())
             ->whereNull('read')
-            ->orderBy('created_at', 'desc')
             ->count();
     })->name('userschatcount');
 
@@ -100,22 +106,8 @@ Route::middleware(['web', 'auth'])->group(function () {
     });
 
     Route::get('/messages/receiver/toread/{friend_id}', function ($friend_id) {
-
-        return ChatMessage::query()
-            ->where(function ($q) use ($friend_id) {
-                //TROVA LA CHAT DOVE SONO CONINVOLTI CHI è AUTENTICATO
-                //E L'AMICO INTERESSATO
-                $q->where(function ($query) use ($friend_id) {
-                    $query->where('sender_id', auth()->id())
-                        ->where('receiver_id', $friend_id);
-                })
-                    ->orWhere(function ($query) use ($friend_id) {
-                        $query->where('sender_id', $friend_id)
-                            ->where('receiver_id', auth()->id());
-                    });
-            })
+        return ChatMessage::where('sender_id', $friend_id)
             ->where('receiver_id', auth()->id())
-
             ->whereNull('read')
             ->count();
     });

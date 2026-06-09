@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace SalvatoreCervone\ChatOneToOne\Events;
 
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -35,6 +35,10 @@ class MessageSent implements ShouldBroadcastNow
         ];
     }
 
+    public function broadcastAs(): string
+    {
+        return 'MessageSent';
+    }
 
     public function broadcastConnections()
     {

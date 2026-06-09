@@ -88,7 +88,7 @@ onMounted(() => {
         });
 
     Echo.private(`chat.${props.currentUser.id}`)
-        .listen("MessageSent", (response) => {
+        .listen(".MessageSent", (response) => {
             if (chatmessages.value == false) {
                 messagetoread.value += 1;
             }

@@ -22,7 +22,7 @@ class ChatOneToOneServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/Http/Controllers' => app_path('Http/Controllers/')], 'controller-chatonetoone');
         $this->publishes([__DIR__ . '/Models' => app_path('Models/')], 'model-chatonetoone');
         $this->publishes([__DIR__ . '/Events' => app_path('Events/')], 'event-chatonetoone');
-        $this->publishes([__DIR__ . '/config' => config_path()], 'config-chatonetoone');
+        $this->publishes([__DIR__ . '/config/chatonetoone.php' => config_path('chatonetoone.php')], 'config-chatonetoone');
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
@@ -37,7 +37,7 @@ class ChatOneToOneServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/chatonetoone.php', 'chatonetoone');
+        $this->mergeConfigFrom(__DIR__ . '/config/chatonetoone.php', 'chatonetoone');
 
         // Register the service the package provides.
         $this->app->singleton('chatonetoone', function ($app) {
@@ -64,7 +64,7 @@ class ChatOneToOneServiceProvider extends ServiceProvider
     {
         // Publishing the configuration file.
         $this->publishes([
-            __DIR__ . '/../config/chatonetoone.php' => config_path('chatonetoone.php'),
+            __DIR__ . '/config/chatonetoone.php' => config_path('chatonetoone.php'),
         ], 'chatonetoone.config');
     }
 }

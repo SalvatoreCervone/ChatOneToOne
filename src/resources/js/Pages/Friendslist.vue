@@ -63,22 +63,15 @@ onMounted(() => {
 
 
 function ricercautente() {
-    if (ricercautente_term.value.length > 0) {
-        let terms = ricercautente_term.value.split(" ");
-        terms.map(function (term) {
-            if (term.length > 0) {
-
-                let find = users.value.map(function (user) {
-                    let nominativo = user.name?.toLowerCase() + " " + user.cognome?.toLowerCase()
-                    return nominativo.includes(term.toLowerCase()) ? user : null;
-                })
-                usersfilter.value = find.filter(n => n)
-            }
-        })
+    if (ricercautente_term.value.trim().length > 0) {
+        const terms = ricercautente_term.value.toLowerCase().split(/\s+/).filter(Boolean);
+        usersfilter.value = users.value.filter(user => {
+            const nominativo = ((user.name || "") + " " + (user.cognome || "")).toLowerCase();
+            return terms.every(term => nominativo.includes(term));
+        });
     } else {
-        usersfilter.value = users.value
+        usersfilter.value = users.value;
     }
-
 }
 
 function aprichat(user) {
