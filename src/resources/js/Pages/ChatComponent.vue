@@ -55,6 +55,10 @@ const props = defineProps({
     chat_closed: {
         type: Boolean,
         default: true
+    },
+    initialUnreadCount: {
+        type: Number,
+        default: null
     }
 });
 
@@ -64,11 +68,44 @@ const chatmessages = ref(false);
 const friend = ref(null);
 const iconizza = ref(false);
 const messagetoread = ref(0);
-const onlineuser = ref([])
+const onlineuser = ref([]);
+const isPrivateSubscribed = ref(false);
+const isPresenceSubscribed = ref(false);
 
 onMounted(() => {
+    if (props.chat_closed) {
+        iconizza.value = true;
+        subscribePrivate();
+    } else {
+        iconizza.value = false;
+        subscribePrivate();
+        subscribePresence();
+    }
 
-    Echo.join('users')
+    if (props.initialUnreadCount !== null) {
+        messagetoread.value = props.initialUnreadCount;
+    } else {
+        getmessagetoread();
+    }
+});
+
+function subscribePrivate() {
+    if (isPrivateSubscribed.value || !window.Echo) return;
+
+    window.Echo.private(`chat.${props.currentUser.id}`)
+        .listen(".MessageSent", (response) => {
+            if (chatmessages.value == false) {
+                messagetoread.value += 1;
+            }
+        });
+
+    isPrivateSubscribed.value = true;
+}
+
+function subscribePresence() {
+    if (isPresenceSubscribed.value || !window.Echo) return;
+
+    window.Echo.join('users')
         .here((usersonline) => {
             console.log('here', usersonline)
             onlineuser.value = usersonline
@@ -76,29 +113,23 @@ onMounted(() => {
         .joining((useronline) => {
             console.log('joining', useronline)
             checkonline(useronline)
-
         })
         .leaving((useronline) => {
             console.log('leaving', useronline)
-
             checkoffline(useronline)
-
         }).error(function (error) {
             console.log(error)
         });
 
-    Echo.private(`chat.${props.currentUser.id}`)
-        .listen(".MessageSent", (response) => {
-            if (chatmessages.value == false) {
-                messagetoread.value += 1;
-            }
-        });
+    isPresenceSubscribed.value = true;
+}
 
-    if (props.chat_closed) {
-        iconizza.value = true
-    }
-    getmessagetoread();
-})
+function unsubscribePresence() {
+    if (!isPresenceSubscribed.value || !window.Echo) return;
+
+    window.Echo.leave('users');
+    isPresenceSubscribed.value = false;
+}
 
 function checkonline(useronline) {
     onlineuser.value.push(useronline)
@@ -122,9 +153,7 @@ function chiudichat(val) {
     friendslist.value = false;
     friendslistchat.value = true;
     chatmessages.value = false;
-
 }
-
 
 function letturaeffettuata() {
     getmessagetoread()
@@ -132,6 +161,12 @@ function letturaeffettuata() {
 
 function iconizzachat() {
     iconizza.value = !iconizza.value
+    if (!iconizza.value) {
+        subscribePrivate();
+        subscribePresence();
+    } else {
+        unsubscribePresence();
+    }
 }
 
 function ricercautenti() {
@@ -145,11 +180,6 @@ function getmessagetoread() {
         messagetoread.value = data.data
     })
 }
-
-
-
-
-
 </script>
 <style scoped>
 .selezionato {
