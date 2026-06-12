@@ -66,20 +66,18 @@ const friendslist = ref(false);
 const friendslistchat = ref(true);
 const chatmessages = ref(false);
 const friend = ref(null);
-const iconizza = ref(false);
+const iconizza = ref(props.chat_closed);
 const messagetoread = ref(0);
 const onlineuser = ref([]);
 const isPrivateSubscribed = ref(false);
 const isPresenceSubscribed = ref(false);
 
 onMounted(() => {
-    if (props.chat_closed) {
-        iconizza.value = true;
-        subscribePrivate();
-    } else {
-        iconizza.value = false;
+    if (!iconizza.value) {
         subscribePrivate();
         subscribePresence();
+    } else {
+        subscribePrivate();
     }
 
     if (props.initialUnreadCount !== null) {
