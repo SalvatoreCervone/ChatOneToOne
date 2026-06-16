@@ -73,12 +73,8 @@ const isPrivateSubscribed = ref(false);
 const isPresenceSubscribed = ref(false);
 
 onMounted(() => {
-    if (!iconizza.value) {
-        subscribePrivate();
-        subscribePresence();
-    } else {
-        subscribePrivate();
-    }
+    subscribePrivate();
+    subscribePresence();
 
     if (props.initialUnreadCount !== null) {
         messagetoread.value = props.initialUnreadCount;
@@ -159,12 +155,6 @@ function letturaeffettuata() {
 
 function iconizzachat() {
     iconizza.value = !iconizza.value
-    if (!iconizza.value) {
-        subscribePrivate();
-        subscribePresence();
-    } else {
-        unsubscribePresence();
-    }
 }
 
 function ricercautenti() {
